@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_slide_show"
+        android:title="@string/menu_item_slide_show"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_selection"
+        android:title="@string/menu_item_selection"
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/action_view"
+        android:title="@string/menu_item_view"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_sorting"
+        android:title="@string/menu_item_sorting"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_hide"
+        android:title="@string/menu_item_hide"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_exclude"
+        android:title="@string/menu_item_exclude"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_rename"
+        android:title="@string/menu_item_rename"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_change_date"
+        android:title="@string/menu_item_change_date"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/action_create_shortcut"
+        android:title="@string/menu_item_create_shortcut"
+        app:showAsAction="never"/>
+</menu>
+
+
+
+
+
