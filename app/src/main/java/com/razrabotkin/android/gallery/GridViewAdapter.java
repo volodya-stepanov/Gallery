@@ -37,7 +37,7 @@ public class GridViewAdapter extends ArrayAdapter {
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new ViewHolder();
             //holder.imageTitle = (TextView) row.findViewById(R.id.text);
-            holder.image = (ImageView) row.findViewById(R.id.image);
+            holder.image = (SquareImageView) row.findViewById(R.id.image);
             row.setTag(holder);
         } else {
             holder = (ViewHolder) row.getTag();
@@ -51,6 +51,6 @@ public class GridViewAdapter extends ArrayAdapter {
 
     static class ViewHolder {
         //TextView imageTitle;
-        ImageView image;
+        SquareImageView image;
     }
 }
