@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Gallery</string>
+
+    <!--Пункты меню-->
     <string name="menu_item_slide_show">Слайд-шоу</string>
     <string name="menu_item_selection">Выделение</string>
     <string name="menu_item_view">Вид</string>
