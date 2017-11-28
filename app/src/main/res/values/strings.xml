@@ -30,4 +30,9 @@
         <item>@drawable/image_8</item>
         <item>@drawable/image_9</item>
     </string-array>
+
+    <string-array name="folder_paths">
+        <item>Галерея</item>
+        <item>Ъ:/Галерея</item>
+    </string-array>
 </resources>
