@@ -84,7 +84,17 @@ public class PhotosActivity extends AppCompatActivity {
                 //TODO: Добавить обработку нажатия
                 return true;
             case R.id.action_view:
-                //TODO: Добавить обработку нажатия
+                //TODO: Нужно ли добавлять обработку нажатия?
+                return true;
+            case R.id.action_view_grid:
+                //TODO: Реализовать логику
+                Toast.makeText(this, "Ну типо изменили на таблицу", Toast.LENGTH_SHORT).show();
+                item.setChecked(true);
+                return true;
+            case R.id.action_view_list:
+                //TODO: Реализовать логику
+                Toast.makeText(this, "Ну типо изменили на список", Toast.LENGTH_SHORT).show();
+                item.setChecked(true);
                 return true;
             case R.id.action_sorting:
                 //TODO: Добавить обработку нажатия
@@ -107,6 +117,20 @@ public class PhotosActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    /**
+     * Изменяет вид галереи на таблицу
+     */
+    private void setViewGrid() {
+
+    }
+
+    /**
+     * Изменяет вид галереи на список
+     */
+    private void setViewList() {
+
     }
 
     /**

@@ -1,16 +1,31 @@
 <resources>
-<string name="app_name">Gallery</string>
-<string name="menu_item_slide_show">Слайд-шоу</string>
-<string name="menu_item_selection">Выделение</string>
-<string name="menu_item_view">Вид</string>
-<string name="menu_item_sorting">Сортировка</string>
-<string name="menu_item_hide">Скрыть</string>
-<string name="menu_item_exclude">Исключить</string>
-<string name="menu_item_rename">Переименовать</string>
-<string name="menu_item_change_date">Исправить дату</string>
-<string name="menu_item_create_shortcut">Создать ярлык</string>
+    <string name="app_name">Gallery</string>
+
+    <!--Заголовки пунктов меню операции PhotosActivity-->
+    <string name="menu_item_slide_show">Слайд-шоу</string>
+    <string name="menu_item_selection">Выделение</string>
+    <string name="menu_item_view">Вид</string>
+    <string name="menu_item_sorting">Сортировка</string>
+    <string name="menu_item_hide">Скрыть</string>
+    <string name="menu_item_exclude">Исключить</string>
+    <string name="menu_item_rename">Переименовать</string>
+    <string name="menu_item_change_date">Исправить дату</string>
+    <string name="menu_item_create_shortcut">Создать ярлык</string>
     <string name="menu_item_view_grid">Сетка</string>
     <string name="menu_item_view_list">Список</string>
+
+    <!--Заголовки пунктов меню операции DetailsActivity-->
+    <string name="menu_item_share">Поделиться</string>
+    <string name="menu_item_delete">Удалить</string>
+    <string name="menu_item_copy">Копирование</string>
+    <string name="menu_item_details">Детали</string>
+    <string name="menu_item_turn">Поворот</string>
+    <string name="menu_item_edit">Редактировать</string>
+    <string name="menu_item_set_as">Установить как</string>
+    <string name="menu_item_move_to">Переместить в</string>
+    <string name="menu_item_copy_to">Копировать в</string>
+    <string name="menu_item_show_on_map">Показать на карте</string>
+    <string name="menu_item_settings">Настройки</string>
 
     <string-array name="image_ids">
         <item>@drawable/image_1</item>

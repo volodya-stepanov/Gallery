@@ -23,15 +23,12 @@
                 <item
                     android:id="@+id/action_view_grid"
                     android:title="@string/menu_item_view_grid"
-                    app:showAsAction="never"
-                    android:checkable="true"
-                    android:checked="true"/>
+                    app:showAsAction="never"/>
 
                 <item
                     android:id="@+id/action_view_list"
                     android:title="@string/menu_item_view_list"
-                    app:showAsAction="never"
-                    android:checkable="true"/>
+                    app:showAsAction="never"/>
             </group>
         </menu>
     </item>
