@@ -116,6 +116,7 @@ public class PhotosActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         // Создаем экземпляр класса Spinner
+        // Рассмотрен пример для диалога, поэтому в данном случае спиннер создается именно так
         final Spinner spinner = new Spinner(this);
 
         //TODO: Установить margin

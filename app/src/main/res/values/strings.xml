@@ -1,14 +1,16 @@
 <resources>
-    <string name="app_name">Gallery</string>
-    <string name="menu_item_slide_show">Слайд-шоу</string>
-    <string name="menu_item_selection">Выделение</string>
-    <string name="menu_item_view">Вид</string>
-    <string name="menu_item_sorting">Сортировка</string>
-    <string name="menu_item_hide">Скрыть</string>
-    <string name="menu_item_exclude">Исключить</string>
-    <string name="menu_item_rename">Переименовать</string>
-    <string name="menu_item_change_date">Исправить дату</string>
-    <string name="menu_item_create_shortcut">Создать ярлык</string>
+<string name="app_name">Gallery</string>
+<string name="menu_item_slide_show">Слайд-шоу</string>
+<string name="menu_item_selection">Выделение</string>
+<string name="menu_item_view">Вид</string>
+<string name="menu_item_sorting">Сортировка</string>
+<string name="menu_item_hide">Скрыть</string>
+<string name="menu_item_exclude">Исключить</string>
+<string name="menu_item_rename">Переименовать</string>
+<string name="menu_item_change_date">Исправить дату</string>
+<string name="menu_item_create_shortcut">Создать ярлык</string>
+    <string name="menu_item_view_grid">Сетка</string>
+    <string name="menu_item_view_list">Список</string>
 
     <string-array name="image_ids">
         <item>@drawable/image_1</item>
