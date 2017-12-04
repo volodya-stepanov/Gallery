@@ -6,12 +6,14 @@
     <item
         android:id="@+id/action_slide_show"
         android:title="@string/menu_item_slide_show"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_slideshow_white_24dp"/>
 
     <item
         android:id="@+id/action_selection"
         android:title="@string/menu_item_selection"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_selection_mode_white_24dp"/>
 
     <item
         android:id="@+id/action_view"
@@ -36,7 +38,32 @@
     <item
         android:id="@+id/action_sorting"
         android:title="@string/menu_item_sorting"
-        app:showAsAction="never"/>
+        app:showAsAction="never">
+
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/action_sorting_name"
+                    android:title="@string/menu_item_sorting_name"
+                    app:showAsAction="never"/>
+
+                <item
+                    android:id="@+id/action_sorting_date"
+                    android:title="@string/menu_item_sorting_date"
+                    app:showAsAction="never"/>
+
+                <item
+                    android:id="@+id/action_sorting_shooting_date"
+                    android:title="@string/menu_item_sorting_shooting_date"
+                    app:showAsAction="never"/>
+
+                <item
+                    android:id="@+id/action_sorting_size"
+                    android:title="@string/menu_item_sorting_size"
+                    app:showAsAction="never"/>
+            </group>
+        </menu>
+    </item>
 
     <item
         android:id="@+id/action_hide"

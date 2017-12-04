@@ -26,6 +26,10 @@
     <string name="menu_item_copy_to">Копировать в</string>
     <string name="menu_item_show_on_map">Показать на карте</string>
     <string name="menu_item_settings">Настройки</string>
+    <string name="menu_item_sorting_name">По имени</string>
+    <string name="menu_item_sorting_date">По дате</string>
+    <string name="menu_item_sorting_shooting_date">По дате съемки</string>
+    <string name="menu_item_sorting_size">По размеру</string>
 
     <string-array name="image_ids">
         <item>@drawable/image_1</item>

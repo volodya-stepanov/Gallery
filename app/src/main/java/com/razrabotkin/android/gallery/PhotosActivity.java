@@ -84,7 +84,7 @@ public class PhotosActivity extends AppCompatActivity {
                 //TODO: Добавить обработку нажатия
                 return true;
             case R.id.action_view:
-                //TODO: Нужно ли добавлять обработку нажатия?
+                // Не нужно добавлять обработку нажатия
                 return true;
             case R.id.action_view_grid:
                 //TODO: Реализовать логику
@@ -96,7 +96,16 @@ public class PhotosActivity extends AppCompatActivity {
                 Toast.makeText(this, "Ну типо изменили на список", Toast.LENGTH_SHORT).show();
                 item.setChecked(true);
                 return true;
-            case R.id.action_sorting:
+            case R.id.action_sorting_name:
+                //TODO: Добавить обработку нажатия
+                return true;
+            case R.id.action_sorting_date:
+                //TODO: Добавить обработку нажатия
+                return true;
+            case R.id.action_sorting_shooting_date:
+                //TODO: Добавить обработку нажатия
+                return true;
+            case R.id.action_sorting_size:
                 //TODO: Добавить обработку нажатия
                 return true;
             case R.id.action_hide:
