@@ -2,12 +2,15 @@ package com.razrabotkin.android.gallery;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,10 +43,10 @@ public class DetailsActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_details, menu);
 
         //Находим пункт меню с объектом ShareActionProvider
-        MenuItem item = menu.findItem(R.id.action_share);
+        MenuItem shareItem = menu.findItem(R.id.action_share);
 
         // Получаем и сохраняем ShareActionProvider
-        ShareActionProvider mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(item);
+        ShareActionProvider mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(shareItem);
 
         if(mShareActionProvider != null) {
             mShareActionProvider.setShareIntent(createShareIntent());
@@ -51,6 +54,12 @@ public class DetailsActivity extends AppCompatActivity {
             Log.d(LOG_TAG, "Share Action Provider is null?");
         }
         
+		MenuItem deleteItem = menu.findItem(R.id.action_delete);
+
+		SpannableString s = new SpannableString("Удалить");
+		s.setSpan(new ForegroundColorSpan(Color.RED), 0, s.length(), 0);
+		deleteItem.setTitle(s);
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -76,14 +85,14 @@ public class DetailsActivity extends AppCompatActivity {
             case R.id.action_details:
                 //TODO: Добавить обработку нажатия
                 return true;
-            case R.id.action_turn:
-                //TODO: Добавить обработку нажатия
-                return true;
+//            case R.id.action_turn:
+//                //TODO: Добавить обработку нажатия
+//                return true;
             case R.id.action_edit:
                 //TODO: Добавить обработку нажатия
                 return true;
             case R.id.action_set_as:
-                //TODO: Добавить обработку нажатия
+                onSetAsClicked();
                 return true;
             case R.id.action_move_to:
                 //TODO: Добавить обработку нажатия
@@ -106,6 +115,14 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     /**
+     * Вызывается при выборе пункта "Установить как"
+     */
+    private void onSetAsClicked() {
+        Intent intent = createSetAsIntent();
+        startActivity(Intent.createChooser(intent, getText(R.string.app_name)));
+    }
+
+    /**
      * Создает интент для того, чтобы поделиться текущим изображением
      * @return Интент с текущим изображением, чтобы поделиться им
      */
@@ -116,9 +133,30 @@ public class DetailsActivity extends AppCompatActivity {
         shareIntent.setType("image/jpeg");
 
         String bitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(), mBitmap, "title", null);
-        Uri bitmapUri = Uri.parse(bitmapPath);
-        shareIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+        
+		if(bitmapPath != null){
+            Uri bitmapUri = Uri.parse(bitmapPath);
+            shareIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+		}
 
         return shareIntent;
+    }
+
+    /**
+     * Создаёт интент для того, чтобы установить текущее изображение в качестве обоев, аватарки абонента и т.д.
+     * @return Интент с текущим изображением, чтобы установить его в качестве чего-нибудь
+     */
+    public Intent createSetAsIntent() {
+        Intent setAsIntent = new Intent(Intent.ACTION_ATTACH_DATA);
+        setAsIntent.setType("image/jpeg");
+
+        String bitmapPath = MediaStore.Images.Media.insertImage(getContentResolver(), mBitmap, "title", null);
+
+        if(bitmapPath != null){
+            Uri bitmapUri = Uri.parse(bitmapPath);
+            setAsIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+        }
+
+        return setAsIntent;
     }
 }

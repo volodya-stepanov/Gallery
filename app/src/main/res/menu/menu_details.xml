@@ -6,20 +6,29 @@
     <item
         android:id="@+id/action_share"
         android:title="@string/menu_item_share"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_share_white_24dp"/>
+        app:showAsAction="always"
+        android:icon="@drawable/ic_share_white_24dp"
+        app:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
 
     <item
-        android:id="@+id/action_delete"
         android:title="@string/menu_item_delete"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_delete_white_24dp"
-        app:actionProviderClass="android.support.v7.widget.ShareActionProvider"/>
+        app:showAsAction="always"
+        android:icon="@drawable/ic_delete_white_24dp">
+
+        <menu>
+            <item
+                android:id="@+id/action_delete"
+                android:title="@string/menu_item_delete"
+                app:showAsAction="never"
+                android:icon="@drawable/ic_delete_open_red_24dp"/>
+        </menu>
+    </item>
 
     <item
         android:id="@+id/action_view"
         android:title="@string/menu_item_view"
-        app:showAsAction="never"/>
+        app:showAsAction="never"
+        android:icon="@drawable/ic_delete_white_24dp"/>
 
     <item
         android:id="@+id/action_slide_show"
@@ -36,10 +45,27 @@
         android:title="@string/menu_item_details"
         app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/action_turn"
+    <item        
         android:title="@string/menu_item_turn"
-        app:showAsAction="never"/>
+        app:showAsAction="never">
+            
+        <menu>
+            <item
+                android:id="@+id/action_rotate_left"
+                android:title="@string/menu_item_left"
+                android:icon="@drawable/ic_rotate_left_white_24dp"/>
+
+            <item
+                android:id="@+id/action_rotate_right"
+                android:title="@string/menu_item_right"
+                android:icon="@drawable/ic_rotate_right_white_24dp"/>
+
+            <item
+                android:id="@+id/action_rotate_180"
+                android:title="@string/menu_item_180"
+                android:icon="@drawable/ic_rotate_180_white_24dp"/>
+        </menu>
+    </item>
 
     <item
         android:id="@+id/action_edit"

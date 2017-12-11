@@ -30,6 +30,9 @@
     <string name="menu_item_sorting_date">По дате</string>
     <string name="menu_item_sorting_shooting_date">По дате съемки</string>
     <string name="menu_item_sorting_size">По размеру</string>
+    <string name="menu_item_left">Влево</string>
+    <string name="menu_item_right">Вправо</string>
+    <string name="menu_item_180">Поворот на 180°</string>
 
     <string-array name="image_ids">
         <item>@drawable/image_1</item>
