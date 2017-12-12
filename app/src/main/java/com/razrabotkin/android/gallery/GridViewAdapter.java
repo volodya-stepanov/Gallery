@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 /**
@@ -45,7 +47,8 @@ public class GridViewAdapter extends ArrayAdapter {
 
         ImageItem item = (ImageItem) data.get(position);
         //holder.imageTitle.setText(item.getTitle());
-        holder.image.setImageBitmap(item.getImage());
+        //holder.image.setImageBitmap(item.getImage());
+        Glide.with(context).load(item.getResourceId()).into(holder.image);
         return row;
     }
 

@@ -7,13 +7,15 @@ import android.graphics.Bitmap;
  */
 
 public class ImageItem {
-    private Bitmap image;
+    private Bitmap image;   //TODO: Возможно, это поле можно будет полностью удалить
     private String title;
+    private int resourceId;
 
-    public ImageItem(Bitmap image, String title) {
+    public ImageItem(Bitmap image, String title, int resourceId) {
         super();
-        this.image = image;
+        //this.image = image;
         this.title = title;
+        this.resourceId = resourceId;
     }
 
     public Bitmap getImage() {
@@ -30,5 +32,13 @@ public class ImageItem {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(int resourceId) {
+        this.resourceId = resourceId;
     }
 }
