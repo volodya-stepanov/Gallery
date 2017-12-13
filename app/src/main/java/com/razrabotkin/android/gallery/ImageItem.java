@@ -13,7 +13,7 @@ public class ImageItem {
 
     public ImageItem(Bitmap image, String title, int resourceId) {
         super();
-        //this.image = image;
+        this.image = image;
         this.title = title;
         this.resourceId = resourceId;
     }

@@ -2,6 +2,8 @@ package com.razrabotkin.android.gallery;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+
+import static android.media.ThumbnailUtils.extractThumbnail;
 
 /**
  * Created by PC on 14.11.2017.
@@ -47,8 +51,11 @@ public class GridViewAdapter extends ArrayAdapter {
 
         ImageItem item = (ImageItem) data.get(position);
         //holder.imageTitle.setText(item.getTitle());
-        //holder.image.setImageBitmap(item.getImage());
-        Glide.with(context).load(item.getResourceId()).into(holder.image);
+
+        //Bitmap thumbnail = ThumbnailUtils.extractThumbnail(item.getImage(), 100, 100);
+
+        holder.image.setImageBitmap(item.getImage());
+        //Glide.with(context).load(item.getResourceId()).into(holder.image);
         return row;
     }
 

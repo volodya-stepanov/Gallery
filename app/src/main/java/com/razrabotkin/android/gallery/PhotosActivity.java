@@ -64,7 +64,7 @@ public class PhotosActivity extends AppCompatActivity {
         final ArrayList<ImageItem> imageItems = new ArrayList<>();
         TypedArray imgs = getResources().obtainTypedArray(R.array.image_ids);
         for (int i = 0; i < imgs.length(); i++) {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imgs.getResourceId(i, -1));
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imgs.getResourceId(i, -1));    //TODO: Падает вот здесь при попытке второго выполнения цикла
             imageItems.add(new ImageItem(bitmap, "Image#" + i, imgs.getResourceId(i, -1)));
         }
         return imageItems;
