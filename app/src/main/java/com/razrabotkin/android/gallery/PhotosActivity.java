@@ -1,20 +1,29 @@
 package com.razrabotkin.android.gallery;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -28,6 +37,12 @@ public class PhotosActivity extends AppCompatActivity {
     private GridViewAdapter gridAdapter;
     private String mFolderName;     //TODO: Здесь должно храниться название папки, которая открыта в данный момент.
 
+    /**Курсор для доступа к результатам запроса изображений с SD-карты*/
+    private Cursor cursor;
+
+    /**Индекс колонки для ID-шников уменьешнных копий изображения*/
+    private int columnIndex;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_photos, menu);
@@ -38,6 +53,22 @@ public class PhotosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photos);
+
+        //НАЧАЛО Загрузка изображений с SD-карты
+        // Создаём массив, содержащий одну запись - колонку ID уменьшенной копии изображения
+        String[] projection = {MediaStore.Images.Thumbnails._ID};
+
+        // Создаём курсор, соответвтующий SD-карте
+        cursor = managedQuery(MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI,
+                projection,     // Какие колонки возвращать
+                null,
+                null,
+                MediaStore.Images.Thumbnails.IMAGE_ID);
+
+        // Получаем индекс колонки для ID уменьшенной копии изображения
+        columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Thumbnails._ID);
+
+        //КОНЕЦ Загрузка изображений с SD-карты
 
         gridView = (GridView) findViewById(R.id.gridView);
         gridAdapter = new GridViewAdapter(this, R.layout.grid_item_layout, getData());
@@ -268,5 +299,48 @@ public class PhotosActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    class ImageAdapter extends BaseAdapter {
 
+        private Context context;
+
+        public ImageAdapter(Context localContext){
+            context = localContext;
+        }
+
+        @Override
+        public int getCount() {
+            return cursor.getCount();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return position;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup viewGroup) {
+            SquareImageView imageView;
+            if (convertView == null) {
+                imageView = new SquareImageView(context);
+
+                // Перемещаем курсор на текущую позицию
+                cursor.moveToPosition(position);
+
+                // Получаем текущее значение запрошенной колонки
+                int imageID = cursor.getInt(columnIndex);
+
+                // Устанавливаем содержимое изображения на основе URI
+                imageView.setImageURI(Uri.withAppendedPath(MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI, "" + imageID));
+            } else {
+                imageView = (SquareImageView) convertView;
+            }
+
+            return imageView;
+        }
+    }
 }
