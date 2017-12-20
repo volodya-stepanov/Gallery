@@ -1,9 +1,11 @@
 package com.razrabotkin.android.gallery;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -11,6 +13,9 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -42,6 +47,7 @@ public class PhotosActivity extends AppCompatActivity {
 
     /**Индекс колонки для ID-шников уменьешнных копий изображения*/
     private int columnIndex;
+    private final int PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -54,40 +60,56 @@ public class PhotosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photos);
 
-        //НАЧАЛО Загрузка изображений с SD-карты
-        // Создаём массив, содержащий одну запись - колонку ID уменьшенной копии изображения
-        String[] projection = {MediaStore.Images.Thumbnails._ID};
-
-        // Создаём курсор, соответвтующий SD-карте
-        cursor = managedQuery(MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI,
-                projection,     // Какие колонки возвращать
-                null,
-                null,
-                MediaStore.Images.Thumbnails.IMAGE_ID);
-
-        // Получаем индекс колонки для ID уменьшенной копии изображения
-        columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Thumbnails._ID);
-
-        //КОНЕЦ Загрузка изображений с SD-карты
-
-        gridView = (GridView) findViewById(R.id.gridView);
-        gridAdapter = new GridViewAdapter(this, R.layout.grid_item_layout, getData());
-        gridView.setAdapter(gridAdapter);
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                ImageItem item = (ImageItem) parent.getItemAtPosition(position);
-                //Create intent
-                Intent intent = new Intent(PhotosActivity.this, DetailsActivity.class);
-                intent.putExtra("title", item.getTitle());
-                intent.putExtra("image", item.getImage());
-
-                //Start details activity
-                startActivity(intent);
-            }
-        });
+        //Проверяем наличие разрешения на чтение данных с SD-карты
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+        }
 
         mFolderName = "Галерея";
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode){
+            case PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:{
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                    //НАЧАЛО Загрузка изображений с SD-карты
+
+                    // Создаём массив, содержащий одну запись - колонку ID уменьшенной копии изображения
+                    String[] projection = {MediaStore.Images.Thumbnails._ID};
+
+                    // Создаём курсор, соответвтующий SD-карте
+                    cursor = managedQuery(MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI,
+                            projection,     // Какие колонки возвращать
+                            null,
+                            null,
+                            MediaStore.Images.Thumbnails.IMAGE_ID);
+
+                    // Получаем индекс колонки для ID уменьшенной копии изображения
+                    columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Thumbnails._ID);
+
+                    gridView = (GridView) findViewById(R.id.gridView);
+                    gridAdapter = new GridViewAdapter(this, R.layout.grid_item_layout, getData());
+                    //gridView.setAdapter(gridAdapter);
+                    gridView.setAdapter(new ImageAdapter(this));
+
+                    gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                            ImageItem item = (ImageItem) parent.getItemAtPosition(position);
+                            //Create intent
+                            Intent intent = new Intent(PhotosActivity.this, DetailsActivity.class);
+                            intent.putExtra("title", item.getTitle());
+                            intent.putExtra("image", item.getImage());
+
+                            //Start details activity
+                            startActivity(intent);
+                        }
+                    });
+
+                    //КОНЕЦ Загрузка изображений с SD-карты
+                }
+            }
+        }
     }
 
     // Prepare some dummy data for gridview
