@@ -60,12 +60,72 @@ public class PhotosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photos);
 
-        //Проверяем наличие разрешения на чтение данных с SD-карты
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
-        }
-
         mFolderName = "Галерея";
+
+        // НАЧАЛО Загрузка изображений с SD-карты
+//        //Проверяем наличие разрешения на чтение данных с SD-карты
+//        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+//            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+//        }
+// КОНЕЦ Загрузка изображений с SD-карты. Непосредственно обработка выполняется в методе onRequestPermissionsResult
+
+//        //НАЧАЛО Загрузка изображений из внутренней памяти
+//
+//        // Создаём массив, содержащий одну запись - колонку ID уменьшенной копии изображения
+//        String[] projection = {MediaStore.Images.Thumbnails._ID};
+//
+//        // Создаём курсор, соответвтующий SD-карте
+//        cursor = managedQuery(MediaStore.Images.Thumbnails.INTERNAL_CONTENT_URI,    // Вот етот курсор ни хрена не грузит, причём, как с SD-карты, так и из внутренней памяти
+//                projection,     // Какие колонки возвращать
+//                null,
+//                null,
+//                MediaStore.Images.Thumbnails.IMAGE_ID);
+//
+//        // Получаем индекс колонки для ID уменьшенной копии изображения
+//        columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Thumbnails._ID);
+//
+//        gridView = (GridView) findViewById(R.id.gridView);
+//        gridAdapter = new GridViewAdapter(this, R.layout.grid_item_layout, getData());
+//        //gridView.setAdapter(gridAdapter);
+//        gridView.setAdapter(new ImageAdapter(this));
+//
+//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+//                ImageItem item = (ImageItem) parent.getItemAtPosition(position);
+//                //Create intent
+//                Intent intent = new Intent(PhotosActivity.this, DetailsActivity.class);
+//                intent.putExtra("title", item.getTitle());
+//                intent.putExtra("image", item.getImage());
+//
+//                //Start details activity
+//                startActivity(intent);
+//            }
+//        });
+//
+//        //КОНЕЦ Загрузка изображений из внутренней памяти
+
+        // НАЧАЛО Загрузка изображений из массива
+
+        gridView = (GridView) findViewById(R.id.gridView);
+        gridAdapter = new GridViewAdapter(this, R.layout.grid_item_layout, getData());
+        gridView.setAdapter(gridAdapter);
+        //gridView.setAdapter(new ImageAdapter(this));
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                ImageItem item = (ImageItem) parent.getItemAtPosition(position);
+                //Create intent
+                Intent intent = new Intent(PhotosActivity.this, DetailsActivity.class);
+                intent.putExtra("title", item.getTitle());
+                intent.putExtra("image", item.getImage());
+                intent.putExtra("imageId", item.getImageId());
+
+                //Start details activity
+                startActivity(intent);
+            }
+        });
+
+        //КОНЕЦ Загрузка изображений из массива
     }
 
     @Override
@@ -73,13 +133,11 @@ public class PhotosActivity extends AppCompatActivity {
         switch (requestCode){
             case PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:{
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                    //НАЧАЛО Загрузка изображений с SD-карты
-
                     // Создаём массив, содержащий одну запись - колонку ID уменьшенной копии изображения
                     String[] projection = {MediaStore.Images.Thumbnails._ID};
 
                     // Создаём курсор, соответвтующий SD-карте
-                    cursor = managedQuery(MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI,
+                    cursor = managedQuery(MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI,    // Вот етот курсор ни хрена не грузит, причём, как с SD-карты, так и из внутренней памяти
                             projection,     // Какие колонки возвращать
                             null,
                             null,
@@ -105,8 +163,6 @@ public class PhotosActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                     });
-
-                    //КОНЕЦ Загрузка изображений с SD-карты
                 }
             }
         }
@@ -117,8 +173,10 @@ public class PhotosActivity extends AppCompatActivity {
         final ArrayList<ImageItem> imageItems = new ArrayList<>();
         TypedArray imgs = getResources().obtainTypedArray(R.array.image_ids);
         for (int i = 0; i < imgs.length(); i++) {
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imgs.getResourceId(i, -1));    //TODO: Падает вот здесь при попытке второго выполнения цикла
-            imageItems.add(new ImageItem(bitmap, "Image#" + i, imgs.getResourceId(i, -1)));
+
+            //Bitmap bitmap = BitmapFactory.decodeResource(getResources(), imgs.getResourceId(i, -1));
+            int imageId = imgs.getResourceId(i, -1);
+            imageItems.add(new ImageItem(imageId, "Image#" + i));
         }
         return imageItems;
     }
@@ -357,7 +415,8 @@ public class PhotosActivity extends AppCompatActivity {
                 int imageID = cursor.getInt(columnIndex);
 
                 // Устанавливаем содержимое изображения на основе URI
-                imageView.setImageURI(Uri.withAppendedPath(MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI, "" + imageID));
+                imageView.setImageURI(Uri.withAppendedPath(MediaStore.Images.Thumbnails.INTERNAL_CONTENT_URI, "" + imageID));   // Загрузка данных из внутренней памяти
+                //imageView.setImageURI(Uri.withAppendedPath(MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI, "" + imageID));             // Загрузка данных с SD-карты
             } else {
                 imageView = (SquareImageView) convertView;
             }

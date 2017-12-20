@@ -3,6 +3,7 @@ package com.razrabotkin.android.gallery;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,7 +35,9 @@ public class DetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_details);
 
         String title = getIntent().getStringExtra("title");
-        mBitmap = getIntent().getParcelableExtra("image");
+        int imageId = getIntent().getIntExtra("imageId", -1);
+        //mBitmap = getIntent().getParcelableExtra("image");
+        mBitmap = BitmapFactory.decodeResource(getResources(), imageId);
 
         TextView titleTextView = (TextView) findViewById(R.id.title);
         titleTextView.setText(title);

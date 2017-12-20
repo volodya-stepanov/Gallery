@@ -54,8 +54,9 @@ public class GridViewAdapter extends ArrayAdapter {
 
         //Bitmap thumbnail = ThumbnailUtils.extractThumbnail(item.getImage(), 100, 100);
 
-        holder.image.setImageBitmap(item.getImage());
-        //Glide.with(context).load(item.getResourceId()).into(holder.image);
+        //holder.image.setImageBitmap(item.getImage());
+        holder.image.setImageResource(item.getImageId());
+        //Glide.with(context).load(item.getImageId()).into(holder.image);
         return row;
     }
 
