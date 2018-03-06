@@ -34,9 +34,15 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
-        String title = getIntent().getStringExtra("title");
-        int imageId = getIntent().getIntExtra("imageId", -1);
-        //mBitmap = getIntent().getParcelableExtra("image");
+//        String title = getIntent().getStringExtra("title");
+//        int imageId = getIntent().getIntExtra("imageId", -1);
+//        //mBitmap = getIntent().getParcelableExtra("image");
+//        mBitmap = BitmapFactory.decodeResource(getResources(), imageId);
+
+        ImageItem imageItem = getIntent().getParcelableExtra("imageItem");
+
+        String title = imageItem.getTitle();
+        int imageId = imageItem.getImageId();
         mBitmap = BitmapFactory.decodeResource(getResources(), imageId);
 
         TextView titleTextView = (TextView) findViewById(R.id.title);

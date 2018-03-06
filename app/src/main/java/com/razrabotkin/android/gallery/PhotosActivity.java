@@ -116,9 +116,11 @@ public class PhotosActivity extends AppCompatActivity {
                 ImageItem item = (ImageItem) parent.getItemAtPosition(position);
                 //Create intent
                 Intent intent = new Intent(PhotosActivity.this, DetailsActivity.class);
-                intent.putExtra("title", item.getTitle());
-                intent.putExtra("image", item.getImage());
-                intent.putExtra("imageId", item.getImageId());
+//                intent.putExtra("title", item.getTitle());
+//                intent.putExtra("image", item.getImage());
+//                intent.putExtra("imageId", item.getImageId());
+
+                intent.putExtra("imageItem", item);
 
                 //Start details activity
                 startActivity(intent);
@@ -156,8 +158,9 @@ public class PhotosActivity extends AppCompatActivity {
                             ImageItem item = (ImageItem) parent.getItemAtPosition(position);
                             //Create intent
                             Intent intent = new Intent(PhotosActivity.this, DetailsActivity.class);
-                            intent.putExtra("title", item.getTitle());
-                            intent.putExtra("image", item.getImage());
+//                            intent.putExtra("title", item.getTitle());
+//                            intent.putExtra("image", item.getImage());
+                            intent.putExtra("imageItem", item);
 
                             //Start details activity
                             startActivity(intent);
